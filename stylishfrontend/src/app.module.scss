@@ -1,0 +1,24 @@
+.wholepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 5;
+  }
+  .productDemo {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 5rem auto;
+    flex-wrap: wrap;
+    max-width: 80%;
+  }
+  .footer {
+    margin-top: auto;
+  }
+}

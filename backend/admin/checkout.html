@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>TapPay Checkout</title>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.17.0"></script>
+    <script>
+      TPDirect.setupSDK(
+        12348,
+        "app_pa1pQcKoY22IlnSXq5m5WP5jFKzoRG58VEXpT7wU62ud7mMbDOGzCYIlzzLF",
+        "sandbox"
+      );
+    </script>
+    <style>
+      #checkout-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tpfield {
+        height: 40px;
+        width: 300px;
+        border: 1px solid gray;
+        margin: 5px 0;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>信用卡支付</h1>
+    <form id="checkout-form">
+      <div>Email</div>
+      <input type="text" class="tpfield" id="email" placeholder="Email" />
+      <div>信用卡號碼</div>
+      <div class="tpfield" id="card-number"></div>
+
+      <div>有效期限</div>
+
+      <div class="tpfield" id="card-expired"></div>
+      <div>CCV</div>
+      <div class="tpfield" id="card-ccv"></div>
+      <div>token</div>
+      <input class="tpfield" id="access-token"></input>
+      <button id="pay-button">支付</button>
+    </form>
+  </body>
+  <script>
+    TPDirect.card.setup({
+      fields: {
+        number: {
+          element: "#card-number",
+          placeholder: "信用卡號碼",
+        },
+        expirationDate: {
+          element: "#card-expired",
+          placeholder: "有效期限 (MM / YY)",
+        },
+        ccv: {
+          element: "#card-ccv",
+          placeholder: "CCV",
+        },
+      },
+      styles: {
+        input: {
+          color: "gray",
+        },
+        ":focus": {
+          color: "black",
+        },
+        ".valid": {
+          color: "green",
+        },
+        ".invalid": {
+          color: "red",
+        },
+      },
+    });
+    TPDirect.card.onUpdate(function (update) {
+      console.log("update", update);
+      if (update.canGetPrime) {
+        document.getElementById("pay-button").removeAttribute("disabled");
+      } else {
+        document.getElementById("pay-button").setAttribute("disabled", true);
+      }
+    });
+    document.getElementById("pay-button").addEventListener("click", onsubmit);
+
+    function onsubmit(event) {
+      event.preventDefault();
+      const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+      // 確認是否可以 getPrime
+      if (tappayStatus.canGetPrime === false) {
+        alert("can not get prime");
+        return;
+      }
+      // Get prime
+      TPDirect.card.getPrime((result) => {
+        if (result.status !== 0) {
+          alert("get prime error " + result.msg);
+          return;
+        }
+        console.log("result", result)
+        alert("get prime 成功，prime: " + result.card.prime);
+        const authorization = document.getElementById("access-token").value;
+        const requestBody = {
+            prime: result.card.prime,
+            order: {
+              shipping: "delivery",
+              payment: "credit_card",
+              subtotal: 1234,
+              freight: 14,
+              total: 1,
+              recipient: {
+                name: "Luke",
+                phone: "0987654321",
+                email: "luke@gmail.com",
+                address: "市政府站",
+                time: "morning",
+              },
+              list: [
+                {
+                  id: 1,
+                  name: "厚實毛呢格子外套",
+                  price: 1299,
+                  color: {
+                    code: "334455",
+                    name: "淺藍",
+                  },
+                  size: "M",
+                  qty: 1,
+                },
+              ],
+            },
+          };
+        const checkoutData = checkout(authorization, requestBody);
+        });
+    };
+    async function checkout(authorization, requestBody) {
+      const response = await fetch("/api/1.0/order/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authorization,
+        },
+        body: JSON.stringify(requestBody),
+      });
+      console.log(response);
+
+      // const data = await response.json();
+      // console.log(data);
+      return ;
+    }
+
+  </script>
+</html>

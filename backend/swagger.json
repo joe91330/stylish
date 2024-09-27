@@ -1,0 +1,1265 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "description": "user API description",
+    "title": "Week-4"
+  },
+  "tags": [
+    {
+      "name": "products",
+      "description": "Operations related to product"
+    },
+    {
+      "user": "user",
+      "description": "Operations related to user"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "post": {
+        "summary": "Create a new product",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "description": "Product category",
+                    "default": "衣服"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Product title",
+                    "default": "T-shirt"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Product description",
+                    "default": "This is a T-shirt"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "Product price",
+                    "default": 100
+                  },
+                  "texture": {
+                    "type": "string",
+                    "description": "Product texture",
+                    "default": "cotton"
+                  },
+                  "wash": {
+                    "type": "string",
+                    "description": "Washing instructions",
+                    "default": "hand wash"
+                  },
+                  "place": {
+                    "type": "string",
+                    "description": "Place of production",
+                    "default": "Taiwan"
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "Product note",
+                    "default": "No note"
+                  },
+                  "story": {
+                    "type": "string",
+                    "description": "Product story",
+                    "default": "This is a gooooooodddd  T-shirt"
+                  },
+                  "colors": {
+                    "type": "array",
+                    "items": {
+                      "default": {
+                        "code": "#FFFFFF",
+                        "name": "white cloth"
+                      }
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Possible color choices",
+                      "default": "good choice!!!"
+                    },
+                    "default": [
+                      {
+                        "code": "#FFFFFF",
+                        "name": "white cloth"
+                      }
+                    ]
+                  },
+                  "sizes": {
+                    "type": "array",
+                    "items": {
+                      "default": ["S"]
+                    },
+                    "description": "Possible size choices"
+                  },
+                  "variants": {
+                    "type": "array",
+                    "items": {
+                      "default": {
+                        "color_code": "#FFFFFF",
+                        "size": "S",
+                        "stock": 100
+                      }
+                    },
+                    "description": "Possible variants, including stock records"
+                  },
+                  "main_image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Main image URL"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": "Other images URLs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "description": "Product ID"
+                            },
+                            "category": {
+                              "type": "string",
+                              "description": "Product category"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "Product title"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Product description"
+                            },
+                            "price": {
+                              "type": "number",
+                              "description": "Product price"
+                            },
+                            "texture": {
+                              "type": "string",
+                              "description": "Product texture"
+                            },
+                            "wash": {
+                              "type": "string",
+                              "description": "Washing instructions"
+                            },
+                            "place": {
+                              "type": "string",
+                              "description": "Place of production"
+                            },
+                            "note": {
+                              "type": "string",
+                              "description": "Product note"
+                            },
+                            "story": {
+                              "type": "string",
+                              "description": "Product story"
+                            },
+                            "colors": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "Color code"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Color name"
+                                  }
+                                }
+                              },
+                              "description": "Possible color choices"
+                            },
+                            "sizes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "Possible size choices"
+                            },
+                            "variants": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "color_code": {
+                                    "type": "string",
+                                    "description": "Color code"
+                                  },
+                                  "size": {
+                                    "type": "string",
+                                    "description": "Size"
+                                  },
+                                  "stock": {
+                                    "type": "integer",
+                                    "description": "Stock quantity"
+                                  }
+                                }
+                              },
+                              "description": "Possible variants, including stock records"
+                            },
+                            "main_image": {
+                              "type": "string",
+                              "description": "Main image URL"
+                            },
+                            "images": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "Other images URLs"
+                            }
+                          }
+                        },
+                        "request-date": {
+                          "type": "string",
+                          "description": "Request date"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/all": {
+      "get": {
+        "summary": "Get all product",
+        "parameters": [
+          {
+            "name": "paging",
+            "in": "query",
+            "description": "Paging for request next page.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                },
+                "examples": {
+                  "example1": {
+                    "summary": "Get all product",
+                    "value": {
+                      "data": [
+                        {
+                          "id": 1234,
+                          "category": "men",
+                          "title": "厚實毛呢格子外套",
+                          "description": "高抗寒素材選用，保暖也時尚有型",
+                          "price": 2200,
+                          "texture": "棉、聚脂纖維",
+                          "wash": "手洗（水溫40度",
+                          "place": "韓國",
+                          "note": "實品顏色以單品照為主",
+                          "story": "你絕對不能錯過的超值商品",
+                          "colors": [
+                            {
+                              "code": "334455",
+                              "name": "深藍"
+                            },
+                            {
+                              "code": "FFFFFF",
+                              "name": "白色"
+                            }
+                          ],
+                          "sizes": ["S", "M"],
+                          "variants": [
+                            {
+                              "color_code": "334455",
+                              "size": "S",
+                              "stock": 5
+                            },
+                            {
+                              "color_code": "334455",
+                              "size": "M",
+                              "stock": 10
+                            },
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "S",
+                              "stock": 0
+                            },
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "M",
+                              "stock": 2
+                            }
+                          ],
+                          "main_image": "https://stylish.com/main.jpg",
+                          "images": [
+                            "https://stylish.com/0.jpg",
+                            "https://stylish.com/1.jpg",
+                            "https://stylish.com/2.jpg"
+                          ]
+                        },
+                        {
+                          "id": 5678,
+                          "category": "men",
+                          "title": "厚實毛呢格子外套",
+                          "description": "高抗寒素材選用，保暖也時尚有型",
+                          "price": 2200,
+                          "texture": "棉、聚脂纖維",
+                          "wash": "手洗（水溫40度",
+                          "place": "韓國",
+                          "note": "實品顏色以單品照為主",
+                          "story": "你絕對不能錯過的超值商品",
+                          "colors": [
+                            {
+                              "code": "334455",
+                              "name": "深藍"
+                            }
+                          ],
+                          "sizes": ["S", "M", "L"],
+                          "variants": [
+                            {
+                              "color_code": "334455",
+                              "size": "S",
+                              "stock": 5
+                            },
+                            {
+                              "color_code": "334455",
+                              "size": "M",
+                              "stock": 10
+                            },
+                            {
+                              "color_code": "334455",
+                              "size": "L",
+                              "stock": 0
+                            }
+                          ],
+                          "main_image": "https://stylish.com/main.jpg",
+                          "images": [
+                            "https://stylish.com/0.jpg",
+                            "https://stylish.com/1.jpg",
+                            "https://stylish.com/2.jpg"
+                          ]
+                        }
+                      ],
+                      "next_paging": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/women": {
+      "get": {
+        "summary": "Get women product",
+        "parameters": [
+          {
+            "name": "paging",
+            "in": "query",
+            "description": "Paging for request next page.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/men": {
+      "get": {
+        "summary": "Get men product",
+        "parameters": [
+          {
+            "name": "paging",
+            "in": "query",
+            "description": "Paging for request next page.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/accessories": {
+      "get": {
+        "summary": "Get accessory product",
+        "parameters": [
+          {
+            "name": "paging",
+            "in": "query",
+            "description": "Paging for request next page.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/search": {
+      "get": {
+        "summary": "Search product",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "Required",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paging",
+            "in": "query",
+            "description": "Paging for request next page.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                },
+                "examples": {
+                  "example1": {
+                    "summary": "Get all product",
+                    "value": {
+                      "data": [
+                        {
+                          "id": 201807201824,
+                          "category": "women",
+                          "title": "前開衩扭結洋裝",
+                          "description": "厚薄：薄\r\n彈性：無",
+                          "price": 799,
+                          "texture": "棉 100%",
+                          "wash": "手洗，溫水",
+                          "place": "中國",
+                          "note": "實品顏色依單品照為主",
+                          "story": "O.N.S is all about options, which is why we took our staple polo shirt and upgraded it with slubby linen jersey, making it even lighter for those who prefer their summer style extra-breezy.",
+                          "main_image": "https://stylish.com/assets/201807201824/main.jpg",
+                          "images": [
+                            "https://stylish.com/assets/201807201824/0.jpg",
+                            "https://stylish.com/assets/201807201824/1.jpg",
+                            "https://stylish.com/assets/201807201824/0.jpg",
+                            "https://stylish.com/assets/201807201824/1.jpg"
+                          ],
+                          "variants": [
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "S",
+                              "stock": 2
+                            },
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "M",
+                              "stock": 1
+                            },
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "L",
+                              "stock": 2
+                            }
+                          ],
+                          "colors": [
+                            {
+                              "code": "FFFFFF",
+                              "name": "白色"
+                            }
+                          ],
+                          "sizes": ["S", "M", "L"]
+                        },
+                        {
+                          "id": 201902191210,
+                          "category": "women",
+                          "title": "精緻扭結洋裝",
+                          "description": "厚薄：薄\r\n彈性：無",
+                          "price": 999,
+                          "texture": "棉 100%",
+                          "wash": "手洗",
+                          "place": "越南",
+                          "note": "實品顏色依單品照為主",
+                          "story": "O.N.S is all about options, which is why we took our staple polo shirt and upgraded it with slubby linen jersey, making it even lighter for those who prefer their summer style extra-breezy.",
+                          "main_image": "https://stylish.com/assets/201902191210/main.jpg",
+                          "images": [
+                            "https://stylish.com/assets/201902191210/0.jpg",
+                            "https://stylish.com/assets/201902191210/1.jpg",
+                            "https://stylish.com/assets/201902191210/0.jpg",
+                            "https://stylish.com/assets/201902191210/1.jpg"
+                          ],
+                          "variants": [
+                            {
+                              "color_code": "FFFFFF",
+                              "size": "S",
+                              "stock": 0
+                            },
+                            {
+                              "color_code": "FFDDDD",
+                              "size": "M",
+                              "stock": 1
+                            }
+                          ],
+                          "colors": [
+                            {
+                              "code": "FFFFFF",
+                              "name": "白色"
+                            },
+                            {
+                              "code": "FFDDDD",
+                              "name": "粉紅"
+                            }
+                          ],
+                          "sizes": ["S", "M"]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/products/details": {
+      "get": {
+        "summary": "Get product details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Product Id. Required",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_paging": {
+                      "type": "number",
+                      "description": "Next page number. If there are no more pages, server won't return next_paging parameter.",
+                      "required": false
+                    }
+                  }
+                },
+                "examples": {
+                  "example1": {
+                    "summary": "Get all product",
+                    "value": {
+                      "data": {
+                        "data": {
+                          "id": 1234,
+                          "category": "men",
+                          "title": "厚實毛呢格子外套",
+                          "description": "高抗寒素材選用，保暖也時尚有型",
+                          "price": 2200,
+                          "texture": "棉、聚脂纖維",
+                          "wash": "手洗（水溫40度",
+                          "place": "韓國",
+                          "note": "實品顏色以單品照為主",
+                          "story": "你絕對不能錯過的超值商品",
+                          "colors": [
+                            {
+                              "code": "334455",
+                              "name": "深藍"
+                            }
+                          ],
+                          "sizes": ["S", "M", "L"],
+                          "variants": [
+                            {
+                              "color_code": "334455",
+                              "size": "S",
+                              "stock": 5
+                            },
+                            {
+                              "color_code": "334455",
+                              "size": "M",
+                              "stock": 10
+                            },
+                            {
+                              "color_code": "334455",
+                              "size": "L",
+                              "stock": 0
+                            }
+                          ],
+                          "main_image": "https://stylish.com/main.jpg",
+                          "images": [
+                            "https://stylish.com/0.jpg",
+                            "https://stylish.com/1.jpg",
+                            "https://stylish.com/2.jpg"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["products"]
+      }
+    },
+    "/api/1.0/user/signup": {
+      "post": {
+        "summary": "User Signup",
+        "consumes": ["application/json"],
+        "description": "Create a new user account.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "User name. Required",
+                    "default": "test",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email. Required",
+                    "default": "test@test@com",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User password. Required",
+                    "default": "test",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User signed up successfully",
+            "schema": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "access_token": {
+                    "type": "string",
+                    "description": "User access token"
+                  },
+                  "access_expired": {
+                    "type": "number",
+                    "description": "Access token expired time"
+                  },
+                  "user": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "description": "User id"
+                      },
+                      "provider": {
+                        "type": "string",
+                        "description": "User provider"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "User name"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "User email"
+                      },
+                      "picture": {
+                        "type": "string",
+                        "description": "User picture"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email Already Exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Email Already Exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      }
+    },
+    "/api/1.0/user/signin": {
+      "post": {
+        "summary": "User Signin",
+        "description": "Sign in a user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "description": "Only accept native or facebook",
+                    "default": "native",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email. Required",
+                    "default": "test@test@com",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User password. Required",
+                    "default": "test",
+                    "required": true
+                  },
+                  "access_token": {
+                    "type": "string",
+                    "description": "Facebook access token",
+                    "required": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User signed up successfully",
+            "schema": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "access_token": {
+                    "type": "string",
+                    "description": "User access token"
+                  },
+                  "access_expired": {
+                    "type": "number",
+                    "description": "Access token expired time"
+                  },
+                  "user": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "description": "User id"
+                      },
+                      "provider": {
+                        "type": "string",
+                        "description": "User provider"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "User name"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "User email"
+                      },
+                      "picture": {
+                        "type": "string",
+                        "description": "User picture"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Sign in failed"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Server error"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      }
+    },
+    "/api/1.0/user/profile": {
+      "get": {
+        "summary": "User Profile",
+        "description": "Get user profile information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully",
+            "schema": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "User id"
+                  },
+                  "provider": {
+                    "type": "string",
+                    "description": "User provider"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "description": "User picture"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No tooken",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "No token"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

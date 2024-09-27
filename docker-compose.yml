@@ -1,0 +1,26 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile-frontend
+    # image: stylishfrontend
+    expose:
+      - 3000
+    # ports:
+    #   - "3000:3000"
+
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile-backend
+    # image: stylishdocker
+    expose:
+      - 3000
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"

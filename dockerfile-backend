@@ -1,0 +1,8 @@
+FROM node:18.16.1-alpine
+
+COPY ./backend/  /backend/
+WORKDIR /backend
+
+RUN npm install --unsafe-perm
+
+CMD node app.js

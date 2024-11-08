@@ -3,7 +3,8 @@ const cors = require('cors');
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const productRoutes = require("./routes/productRoutes");
-const apiRouter = require("./api");
+const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 const port = 3000;
@@ -20,8 +21,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to your API!");
 });
 
-app.use("/api/1.0/products", productRoutes);
-app.use("/api/1.0", apiRouter);
+app.use('/api/1.0/user', userRoutes);
+app.use('/api/1.0/order', orderRoutes);
+app.use('/api/1.0/products', productRoutes);
 
 app.use(express.static(__dirname));
 
